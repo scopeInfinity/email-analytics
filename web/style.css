@@ -1,0 +1,84 @@
+body {
+	background-color: #EEE;
+	margin:0;
+	overflow-x: hidden;
+	overflow-y: auto; 
+	height: 100%;
+	width: 100%;
+}
+h3 {
+	margin: 0;
+}
+header {
+	display: block;
+	background-color: #101010;
+	color: #CDCDCD;
+	box-shadow: 0px 5px 2px #888888;
+	padding-top: 0.1em;
+	font-size: 1.3em;
+	z-index: 2;
+	padding: 1em;
+	text-shadow: 2px 2px #050505;
+	font-weight: bold;
+}
+header:hover {
+	color: #FFF;
+}
+.main {
+	width: 95%;
+	position: absolute;
+	padding: 1em;
+	text-align: center;
+}
+
+/* Navigation */
+nav {
+	position: relative;
+	width: 100%;
+	margin-left: 5%;
+	z-index: 3;	
+}
+nav>a {
+	border-radius: 5px;
+	padding: 10px;
+	background: #2F4F4F;
+	font-size: 1em;
+    color: white;
+	box-shadow: 1px 2px 1px #888888;
+    text-decoration: none;
+    -webkit-transition:all 200ms ease-in;
+    -moz-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
+
+}
+nav>a:hover {
+    background-color: #CCC;
+    color: #111;
+    font-size: 1.1em;
+    padding-right: 10px;
+}
+
+/* Giving it a CardView kind of look */
+.card {
+	border-radius: 5px;
+	background-color: #FFF;
+	z-index: 1;
+	box-shadow: 0px 1px 1px #888888;
+	min-height: 48px;
+	min-width: 64px;
+	padding: 20px;
+	display: block;
+	margin: 20px;
+
+}
+/* Background of a numberic value, for highting */
+.value {
+	background: #EEE;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: right;
+}
+td {
+	text-align: left;
+}

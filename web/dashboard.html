@@ -1,0 +1,77 @@
+<script type="text/javascript">
+
+	//Fake Values for Now
+	var D_emailData_send = 101;
+	var D_emailData_received = 323;
+	var D_emailData_tome = 20;
+
+	var D_userData_count = 94;
+	var D_emails = 695;
+	var D_reply = 425;
+
+	//Load Values for DashBoard from the `data.php`
+	jQuery.ajax({
+	    url: 'data.php?op=dashboard',
+	    success: function(data) {
+	       var dashContent = jQuery.parseJSON(data);
+           var countData = dashContent['count'];
+
+           userCount = countData['User'];
+           emailCount = countData['Email'];
+           replyCount = countData['Reply'];
+
+	    },
+	    //ASync so that, first it will fetch values from data.php then render the page
+	    async:false
+	  });
+
+		
+</script>
+
+
+<div class="card" style="width: 50%;margin-left: auto;margin-right: auto;">
+	<strong style="text-align: left">Stats</strong>
+	<table style="margin: 0 auto;">
+		<tbody>
+		<tr><td><i class="fa fa-user"></i> Total Number of Users</td><td class='value' id='data_users'></td></tr>
+		<tr><td><i class="fa fa-envelope"></i> Total Number of Emails</td><td class='value' id='data_emails'></td></tr>
+		<tr><td><i class="fa fa-mail-reply"></i> Total Number of Reply</td><td class='value' id='data_reply'></td></tr>
+		</tbody>
+	</table>
+</div>
+<div class="card" style="width: 80%;margin-left: auto;margin-right: auto;">
+	  <div id="piechart_email" style="width: 50%;display: inline-block;"></div>
+	</div>
+
+<!-- Put All Data Values -->
+<script type="text/javascript">
+	document.getElementById("data_users").innerHTML 	= userCount;
+	document.getElementById("data_emails").innerHTML 	= emailCount;
+	document.getElementById("data_reply").innerHTML 	= replyCount;
+</script>
+
+
+<script type="text/javascript">
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var dataEmail = google.visualization.arrayToDataTable([
+      ['Type', 'Number of Emails'],
+      ['Send',     D_emailData_send],
+      ['Received',      D_emailData_received],
+      ['To Me',  D_emailData_tome]
+    ]);
+
+    
+	var chartEmail = new google.visualization.PieChart(document.getElementById('piechart_email'));
+	chartEmail.draw(dataEmail, {
+      title: 'Email Stats',
+      is3D: false,
+      chartArea:{left:10,top:20,width:"100%",height:"100%"},
+      backgroundColor:'transparent',
+      
+
+    });
+    
+
+  }
+</script>

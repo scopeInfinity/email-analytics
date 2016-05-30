@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Email-Analytics</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> 
+    <!--[if lt IE 9]>
+	  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load("current", {packages:["corechart"]});
+	</script>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+</head>
+<body onload="load(0);">
+	<header>
+		<text><i class="fa fa-flash"></i> Email-Analytics<text>
+	</header>
+	<script type="text/javascript">
+		//Loading SubPage depending upon need
+		function load(tab) {
+			if(tab==0) {
+				$("#includedContent").load("dashboard.html"); 
+			} else if(tab==1) {
+				$("#includedContent").load("view.html"); 
+			}
+		}
+	</script>
+	<nav style="min-height: 1.5em">
+	  <a onclick="load(0);"><i class="fa fa-dashboard"></i> Dashboard</a>
+	  <a onclick="load(1);"><i class="fa fa-gear"></i> Game</a> 
+	</nav>
+	<section class="main" id="includedContent">
+	</section>
+
+
+</body>
+</html>
