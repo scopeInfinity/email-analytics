@@ -1,0 +1,99 @@
+<div class="card" style="width: 50%;margin-left: auto;margin-right: auto;text-align: center;">
+	<strong>Relationship Among</strong>
+	<br>
+	<table style="">
+	<tbody style="display: block;">
+	<tr>
+	<td>Source </td>
+	<td><input type="text" id="tx_source" list="list_users" tabindex="1" placeholder="All"></td>
+	</tr>
+	<tr>
+	<td>Destination </td>
+	<td><input type="text" id="tx_destination" list="list_users" tabindex="2"
+	placeholder="All"></td>
+	</tr>
+	</tbody>
+	</table>
+	<input type="button" value="Fetch" onclick="fetchRelation();" tabindex="3"></input>
+	
+</div>
+<div class="card" style="display:none; width:40%;margin-left: auto;margin-right: auto;" id="cardGauge">
+	<strong style="text-align: left">Mood</strong>
+	<canvas id="canvasSentiment" style="display: block;margin-left: auto;margin-right: auto;">
+	</cavas>
+</div>
+<div  class="card" style="width: 60%;margin-left: auto;margin-right: auto;">
+		<strong>Details</strong>
+		<br>
+		<div id="sentiment_content" style="display: block;">
+		Please Fill 'Source' or 'Destinations'
+		</div>
+</div>
+
+
+<script type="text/javascript">
+// For Gauge
+
+var opts = {
+  lines: 12, // The number of lines to draw
+  angle: 0.1, // The length of each line
+  lineWidth: 0.44, // The line thickness
+  pointer: {
+    length: 0.72, // The radius of the inner circle
+    strokeWidth: 0.031, // The rotation offset
+    color: '#000000' // Fill color
+  },
+  limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+  colorStart: '#5113CF',   // Colors
+  colorStop: '#0FB1DA',    // just experiment with them
+  strokeColor: '#E0E0E0',   // to see which ones work best for you
+  generateGradient: true,
+
+  percentColors: [[0.0, "#cc0000" ], [0.50, "#ffff00"], [1.0, "#ff0000"]]
+};
+var target = document.getElementById('canvasSentiment'); // your canvas element
+var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+gauge.maxValue = 2; // set max gauge value
+gauge.animationSpeed = 47; // set animation speed (32 is default value)
+gauge.set(1); // set actual value
+</script>
+
+<script type="text/javascript">
+var last_output = -1;
+$('#tx_source').focusout(function () {
+    fetchRelation();
+});
+$('#tx_destination').focusout(function () {
+    fetchRelation();
+});
+
+	function fetchRelation() {
+		var source = document.getElementById('tx_source').value;
+		var destination = document.getElementById('tx_destination').value;
+		jQuery.ajax({
+	      url: 'data.php?op=avgSentiments&from='+source+"&to="+destination,
+	      success: function(data) {
+	      			var output;
+	      			if(data===last_output)
+	      				return;
+	      			last_output = data;
+
+	                if(data=='NULL') {
+	                	output = "No Relationship";
+	                	document.getElementById('cardGauge').style.display = 'none';
+	                }
+	                else
+	                	{
+	                		data = Math.floor(data*100)/100;
+	                		output = "Average Sentiment is "+data.toFixed(2)+" on Scale of [-1,+1]";
+	                		gauge.set(1+data); 
+	                		document.getElementById('cardGauge').style.display = 'block';
+	                	}
+	                document.getElementById('sentiment_content').innerHTML = output;
+	                
+	      },
+	      async:false
+	    });
+
+	}
+</script>

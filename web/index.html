@@ -13,12 +13,22 @@
 		google.charts.load("current", {packages:["corechart"]});
 	</script>
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="gauge.min.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+
+	<!-- run from the minified library file: -->
+	<script src="arbor.js"></script>  
+	<script src="util.js"></script>
 
 </head>
 <body onload="load(0);">
 	<header>
 		<text><i class="fa fa-flash"></i> Email-Analytics<text>
 	</header>
+	<datalist id="list_users">
+	</datalist>
+	
 	<script type="text/javascript">
 		//Loading SubPage depending upon need
 		function load(tab) {
@@ -26,16 +36,35 @@
 				$("#includedContent").load("dashboard.html"); 
 			} else if(tab==1) {
 				$("#includedContent").load("view.html"); 
+			} else if(tab==2) {
+				$("#includedContent").load("relations.html"); 
 			}
 		}
 	</script>
 	<nav style="min-height: 1.5em">
 	  <a onclick="load(0);"><i class="fa fa-dashboard"></i> Dashboard</a>
 	  <a onclick="load(1);"><i class="fa fa-gear"></i> Game</a> 
+	  <a onclick="load(2);"><i class="fa fa-heart"></i> Relations</a> 
 	</nav>
 	<section class="main" id="includedContent">
 	</section>
-
+	<script type="text/javascript">	
+		function fetchUserList() {
+			jQuery.ajax({
+		      url: 'data.php?op=userList',
+		      success: function(data) {
+		      			var list = JSON.parse(data);
+		      			for (var i = 0; i < list.length; i++) {
+		      				data+="<option value='"+list[i]+"''>";
+		      			}
+		                document.getElementById('list_users').innerHTML = data;
+		                
+		      },
+		      async:false
+		    });
+		}
+		fetchUserList();
+	</script>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 //  For Drawing a arrow from point A to point B
 //	http://stuff.titus-c.ch/arrow.html
-function canvas_arrow(context, fromx, fromy, tox, toy){
+function canvas_arrow(context, fromx, fromy, tox, toy, sentiments, density ){
+		var count = sentiments.length;
+
 		dist = Math.sqrt((fromx-tox)*(fromx-tox)+(fromy-toy)*(fromy-toy));
 		disTrunc = nodeAvgSize/2;
 		if(dist<1)
@@ -16,13 +18,34 @@ function canvas_arrow(context, fromx, fromy, tox, toy){
 		tox = bx;
 		toy = by;
 
-
+	  	//drawArrow(context, fromx, fromy, tox, toy,0);
+        
 
 		var headlen = 10;	// length of head in pixels
 		var dx = tox-fromx;
 		var dy = toy-fromy;
 		var angle = Math.atan2(dy,dx);
-		context.moveTo(fromx, fromy);
+		var anglePendicular = angle + Math.PI/2;
+		var middleX = (fromx + tox)/2;
+		var middleY = (fromy + toy)/2;
+		var ppdThickness = count/4;
+		
+
+		for (var i = 0; i < count; i++) {
+
+			var senti = sentiments[i];
+			if(senti>0)
+				context.strokeStyle = 'rgb(0,' +
+                       Math.floor(127+senti*127) + ',0)';
+			else if(senti<0)
+				context.strokeStyle = 'rgb('+ Math.floor(127-senti*127)+',0,0)';
+			else context.strokeStyle = 'black';
+			context.moveTo(fromx, fromy);
+			var ptx = middleX+Math.cos(anglePendicular)*ppdThickness*(count-i*2);
+			var pty = middleY+Math.sin(anglePendicular)*ppdThickness*(count-i*2);
+			context.quadraticCurveTo(ptx, pty, tox, toy);
+			//context.lineTo(ptx, pty);
+		}
 		context.lineTo(tox, toy);
 		context.lineTo(tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6));
 		context.moveTo(tox, toy);

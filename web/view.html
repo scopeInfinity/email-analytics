@@ -2,24 +2,31 @@
 <img id="user" src="images/user.png"  style="display: none">
 
 <strong>Graph</strong><br>
+<input type="text" id="tx_central_node" list="list_users" tabindex="1"
+	placeholder="All"></td>
 <div class="card" style="background:#0F0;height: 768px;width:1024px;margin-left: auto;margin-right: auto; padding: 0px">
-  <canvas id="viewport" width="1024" height="768" style=" display: block; "></canvas>
+  <canvas id="viewport" width="1024" height="768" style=" display: block; " tabindex="2"></canvas>
 </div>
 <div style="display: block">
 <strong>Properties</strong><br>
-<div id="properties" style="width: 90;height: 100%;overflow-y: auto;overflow-x: hidden;position: relative;text-align: left;margin-bottom: 2em;padding-left: 1em;padding-right: 1em">
-    <div class="card">
+<div id="properties" style="width: 90;height: 100%;overflow-y: auto;overflow-x: hidden;position: relative;text-align: left;margin-bottom: 2em;padding-left: 1em;padding-right: 1em" tabindex="3">
+    <div class="card" >
     <strong>Name</strong>
     <article>Please Select 'User' or 'Email' to grab Details...</article>
     </div>
 </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-
-<!-- run from the minified library file: -->
-<script src="arbor.js"></script>  
-
+<script type="text/javascript">
+	$('#tx_central_node').keypress(function (e) {
+		var key = e.which;
+		if(key == 13)  // the enter key code
+		{
+			console.log($("#tx_central_node").val());
+			graphSys = refreshCentralGraph();
+			fetchCentralGraph(graphSys,$("#tx_central_node").val());
+			return false;  
+		}
+	}); 
+</script>
 <script src="view.js"></script>
-<script src="util.js"></script>
 

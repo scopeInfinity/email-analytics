@@ -77,8 +77,26 @@ nav>a:hover {
 	background: #EEE;
 	padding-left: 5px;
 	padding-right: 5px;
-	text-align: right;
 }
 td {
 	text-align: left;
+}
+
+input[type=text]:focus {
+	box-shadow: 0 0 5px rgba(0, 153, 238, 0.5);
+	padding: 3px 0px 3px 3px;
+	margin: 5px 1px 3px 0px;
+	-webkit-transition:all 200ms ease-in;
+	-moz-transition:all 200ms ease-in;
+	-o-transition:all 200ms ease-in;
+	transition:all 200ms ease-in;
+  
+}
+input[type=text] {
+	padding: 3px 0px 3px 3px;
+	margin: 5px 1px 3px 0px;
+	-webkit-transition:all 200ms ease-in;
+    -moz-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
 }
