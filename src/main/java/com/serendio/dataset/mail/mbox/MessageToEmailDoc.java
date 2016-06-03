@@ -111,6 +111,8 @@ public class MessageToEmailDoc {
 			String text = getTextPart(message);
 			emailObject.setContent(text);
 		}
+		emailObject.grabSentimentIfNeeded();
+				
 
 		return emailObject;
 	}

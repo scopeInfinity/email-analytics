@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
+
 public class EmailDocReader {
 	private String PathForDoc;
 
@@ -51,6 +52,7 @@ public class EmailDocReader {
 				.getRecipients(Message.RecipientType.BCC)));
 		mailDoc.setCc(Utils.addressArrayToHashset(email
 				.getRecipients(Message.RecipientType.CC)));
+		mailDoc.grabSentimentIfNeeded();
 		return mailDoc;
 	}
 

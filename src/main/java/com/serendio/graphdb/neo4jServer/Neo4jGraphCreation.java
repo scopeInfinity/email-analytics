@@ -25,7 +25,7 @@ public class Neo4jGraphCreation {
 
 	public void createEmailNode(String Message_ID, String Date,
 			long EpochTimestamp, String Subject, String Content,
-			String ReplyMessage_ID, String Topic, String Sentiment) {
+			String ReplyMessage_ID, String Topic, double Sentiment) {
 		String queryString = null;
 		if (ReplyMessage_ID != null)
 			queryString = "MERGE (n:Email:Reply {Message_ID: {Message_ID} , Date: {Date} , EpochTimestamp: {EpochTimestamp}, Subject: {Subject} , Content: {Content} , Topic: {Topic} , Sentiment: {Sentiment}}) RETURN n";

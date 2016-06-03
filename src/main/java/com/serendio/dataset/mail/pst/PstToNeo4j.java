@@ -83,7 +83,8 @@ public class PstToNeo4j {
 				emailObject.setSubject(email.getSubject());
 				emailObject.setContent(email.getBody());
 				emailObject.setReplyMessage_ID(email.getInReplyToId());
-
+				emailObject.grabSentimentIfNeeded();
+				
 				emailObject.printMailObject();
 				EmailDocToNeo4j interfaceNeo4j = new EmailDocToNeo4j();
 				interfaceNeo4j.pushToNeo4j(emailObject);

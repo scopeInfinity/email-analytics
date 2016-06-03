@@ -1,5 +1,8 @@
 package com.serendio.dataset.domain;
 
+import com.serendio.Utils.ExtractSentiment;
+import com.serendio.configuration.AppConfigurations;
+
 import java.util.HashSet;
 
 public class EmailDoc {
@@ -15,7 +18,7 @@ public class EmailDoc {
 	private String Date;
 	private String Attachment;
 	private long EpochTimeStamp;
-	private String Sentiment;
+	private double Sentiment;
 	private String Topic;
 
 	public EmailDoc() {
@@ -38,7 +41,7 @@ public class EmailDoc {
 		setSubject(null);
 		setContent("");
 		setDate(null);
-		setSentiment("");
+		setSentiment(0.0);
 		setTopic("");
 	}
 
@@ -160,11 +163,11 @@ public class EmailDoc {
 		this.EpochTimeStamp = l;
 	}
 
-	public String getSentiment() {
+	public double getSentiment() {
 		return Sentiment;
 	}
 
-	public void setSentiment(String sentiment) {
+	public void setSentiment(double sentiment) {
 		Sentiment = sentiment;
 	}
 
@@ -176,4 +179,13 @@ public class EmailDoc {
 		Topic = topic;
 	}
 
+	//Util Functions
+	public void grabSentimentIfNeeded() {
+		if (AppConfigurations.isSENTIMENT_ANALYSIS()) {
+			ExtractSentiment sentiment = new ExtractSentiment(getContent());
+			if (sentiment.fetchSentiment()) {
+				setSentiment(sentiment.getSentiment());
+			}
+		}
+	}
 }
